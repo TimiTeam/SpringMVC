@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -8,12 +9,15 @@
 <div align="center">
     <a href="/home">Home</a>
     <H3>You need to login or create a new Account</H3>
-    <div>
-        <a href="/login">Login</a>
+    <div sec:authorize="isAuthenticated()">
+        <a href="/logout">Logout</a>
     </div>
-    <br>
-    <div>
-        <p>Or if you don't have an account - <a href="/registration">Sign in</a></p>
+    <div sec:authorize="!isAuthenticated()">
+        <a href="/login">Login</a>
+        <br>
+        <div>
+            <p>Or if you don't have an account - <a href="/registration">Sign in</a></p>
+        </div>
     </div>
 </div>
 </body>

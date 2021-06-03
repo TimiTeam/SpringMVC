@@ -2,6 +2,7 @@ package com.gmail.timatiblackstar666.SpringMVC.controller;
 
 import com.gmail.timatiblackstar666.SpringMVC.models.User;
 import com.gmail.timatiblackstar666.SpringMVC.services.IUserService;
+import com.gmail.timatiblackstar666.SpringMVC.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,7 +39,7 @@ public class GreetingController {
     @PostMapping("/registration")
     public String registerDone(@ModelAttribute("newUser") User user, Model model){
         if (user.getRole() == null){
-            user.setRole("USER");
+            user.setRole(Constants.ROLE_USER);
         }
         user.setEnable(true);
         userService.saveUser(user);
@@ -65,7 +66,13 @@ public class GreetingController {
     public String home(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
-            model.addAttribute("name", auth.getName());
+            User u = userService.findUserByLogin(auth.getName());
+            if (u != null){
+                model.addAttribute("name", u.getName());
+                if (u.getRole().equals(Constants.ROLE_ADMIN)){
+                    return "redirect:/admin";
+                }
+            }
         }
         return "home";
     }

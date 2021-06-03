@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<div align="center">
+  <h3>Welcome Admin</h3>
+  <div th:if="${name}">
+    <h3 th:text="${name} + '!'"/>
+  </div>
+  <div>
+    <h3>List of users</h3>
+    <a href="/admin/users">Show All</a>
+    <br>
+  </div>
+  <a href="/logout">Logout</a>
+  <br>
+</div>
+</body>
+</html>

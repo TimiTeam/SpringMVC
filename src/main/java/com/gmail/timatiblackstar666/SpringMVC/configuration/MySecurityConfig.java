@@ -1,12 +1,12 @@
 package com.gmail.timatiblackstar666.SpringMVC.configuration;
 
 import com.gmail.timatiblackstar666.SpringMVC.services.UserDetailsServiceImpl;
+import com.gmail.timatiblackstar666.SpringMVC.utils.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -45,6 +45,10 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/registration")
                 .permitAll()
+                .antMatchers("/greeting/**")
+                .hasAuthority(Constants.ROLE_USER)
+                .antMatchers("/admin/**")
+                .hasAuthority(Constants.ROLE_ADMIN)
                 .anyRequest()
                 .authenticated()
                 .and()
