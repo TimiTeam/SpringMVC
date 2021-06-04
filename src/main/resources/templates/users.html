@@ -1,12 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <style>
+      table th, table td {padding: 5px;}
+
+    </style>
     <title>Users</title>
 </head>
 <body>
-  <div align="center">
+<div align="center">
+    <a href="/admin">Home</a>
+    <br>
+    <hr>
     <h2>All Users</h2>
-  </div>
+    <table class="padding" border="1">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody th:each="user : ${users}">
+        <tr>
+            <td th:text="${user.id}">Id</td>
+            <td th:text="${user.name}">Name</td>
+            <td th:text="${user.email}">Email</td>
+            <td>****</td>
+            <td th:text="${user.role}">Role</td>
+            <td>
+                <a th:href="@{'users/editUser?id=' + ${user.id}}"><input type="button" value="Edit"/></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

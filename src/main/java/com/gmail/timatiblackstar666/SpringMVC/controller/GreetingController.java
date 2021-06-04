@@ -68,10 +68,10 @@ public class GreetingController {
         if (auth != null){
             User u = userService.findUserByLogin(auth.getName());
             if (u != null){
-                model.addAttribute("name", u.getName());
                 if (u.getRole().equals(Constants.ROLE_ADMIN)){
                     return "redirect:/admin";
                 }
+                model.addAttribute("name", u.getName());
             }
         }
         return "home";
