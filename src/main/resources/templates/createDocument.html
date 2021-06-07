@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Document</title>
+</head>
+<body>
+<div align="center">
+    <a th:href="@{'/user?id=' + ${userId}}">Back</a>
+    <h3>Creating</h3>
+    <form th:action="@{'/user/new-document?userId=' + ${userId}}" method="post" th:object="${newDocument}">
+        <table border="1">
+            <tbody>
+            <tr>
+                <td>Document type</td>
+                <td>
+                    <select th:field="*{documentType}">
+                        <option th:each="type : ${documentTypes}" th:value="${type}" th:text="${type.name}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Series</td>
+                <td>
+                    <input type="text" th:field="*{series}"  required="true" minlength="4" maxlength="4"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Number</td>
+                <td>
+                    <input type="text" th:field="*{number}"  required="true" minlength="4"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Start Date</td>
+                <td>
+                    <input type="date" th:text="*{startDate}"  required="true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>End Date</td>
+                <td>
+                    <input type="date" th:value="*{endDate}" required="true"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Active</td>
+                <td>
+                    <input type="checkbox" name="active" th:field="*{active}"  required="true"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="submit">Add</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+</body>
+</html>

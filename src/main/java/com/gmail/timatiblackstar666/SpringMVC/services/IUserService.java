@@ -12,4 +12,5 @@ public interface IUserService {
     User updateUser(User user);
     List<User> findUsersByName(String name);
     List<User> findAllUsers();
+    User getCurrentUser();
 }

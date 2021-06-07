@@ -1,6 +1,8 @@
 package com.gmail.timatiblackstar666.SpringMVC.models;
 
 import javax.persistence.*;
+import javax.print.Doc;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -15,6 +17,9 @@ public class User {
     private String password;
     private String role;
     private boolean enable;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Document> documents;
 
     public User() {
     }
@@ -82,6 +87,20 @@ public class User {
 
     public void setEnable(boolean enable) {
         this.enable = enable;
+    }
+
+    public Set<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(Set<Document> documents) {
+        documents.forEach(document -> document.setOwner(this));
+        this.documents = documents;
+    }
+
+    public void addToDocuments(Document document){
+        document.setOwner(this);
+        this.documents.add(document);
     }
 
     @Override

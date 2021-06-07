@@ -6,6 +6,7 @@
     <style>
       table th, table td {padding: 5px;}
 
+
     </style>
     <title>Users</title>
 </head>
@@ -28,8 +29,10 @@
         </thead>
         <tbody th:each="user : ${users}">
         <tr>
-            <td th:text="${user.id}">Id</td>
-            <td th:text="${user.name}">Name</td>
+            <a th:href="@{'/user?id=' + + ${user.id}}">
+                <td th:text="${user.id}">Id</td>
+                <td th:text="${user.name}">Name</td>
+            </a>
             <td th:text="${user.email}">Email</td>
             <td>****</td>
             <td th:text="${user.role}">Role</td>

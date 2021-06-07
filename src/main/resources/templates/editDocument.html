@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editing</title>
+</head>
+<body>
+<div align="center">
+  <a th:href="@{'/user?id=' + ${userId}}">Back</a>
+  <h2 th:text="'Editing ' + ${doc.series} + ' ' + ${doc.number}"/>
+</div>
+</body>
+</html>

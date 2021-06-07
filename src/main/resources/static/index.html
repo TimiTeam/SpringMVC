@@ -9,10 +9,10 @@
 <div align="center">
     <a href="/home">Home</a>
     <H3>You need to login or create a new Account</H3>
-    <div sec:authorize="isAuthenticated()">
+    <div sec:authorize="${isAuthenticated()}">
         <a href="/logout">Logout</a>
     </div>
-    <div sec:authorize="!isAuthenticated()">
+    <div sec:authorize="${!isAuthenticated()}">
         <a href="/login">Login</a>
         <br>
         <div>

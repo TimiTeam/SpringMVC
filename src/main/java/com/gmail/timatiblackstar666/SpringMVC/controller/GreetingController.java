@@ -72,6 +72,7 @@ public class GreetingController {
                     return "redirect:/admin";
                 }
                 model.addAttribute("name", u.getName());
+                model.addAttribute("userId", u.getId());
             }
         }
         return "home";

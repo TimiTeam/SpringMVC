@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user?.name}"></title>
+</head>
+<body>
+<div align="center">
+    <a href="/home">Home</a>
+    <hr>
+    <div th:if="${errors}">
+        <p th:text="${error}"/>
+    </div>
+    <table>
+        <tbody>
+        <tr>
+            <td>Full name:</td>
+            <td><b><p th:text="${user?.name}"/></b></td>
+        </tr>
+        <tr>
+            <td>Role</td>
+            <td><p th:text="${user?.role}"/></td>
+        </tr>
+        <tr>
+            <td>E-mail:</td>
+            <td><p th:text="${user?.email}"/></td>
+        </tr>
+        <tr>
+            <td>Active</td>
+            <td><p th:text="${user?.enable}"/></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <hr>
+    <h4>Documents</h4>
+    <a th:if="${currentUser}" th:href="@{'user/new-document?userId=' + ${user.id}}">
+        <button>Add new Document</button>
+    </a>
+    <br>
+    <br>
+    <div th:if="${not #lists.isEmpty(user?.documents)}">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Active</th>
+                <th>Type</th>
+                <th>Number</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody th:each="doc : ${user.documents}">
+            <tr>
+                <td th:text="${doc.active}">Active</td>
+                <td th:text="${doc.documentType.name}">Type</td>
+                <td th:text="${'****' + #strings.substring(doc.number, #strings.length(doc.number) - 3, #strings.length(doc.number))}">Number</td>
+                <div th:if="${currentUser}">
+                    <td><a th:href="@{'user/document?docId=' + ${doc.id} + '&userId=' + ${user.id}}">View</a></td>
+                    <td><a th:href="@{'user/edit-document?docId=' + ${doc.id} + '&userId=' + ${user.id}}">Edit</a></td>
+                    <td><a th:href="@{'user/delete-document?docId=' + ${doc.id} + '&userId=' + ${user.id}}">Delete</a></td>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

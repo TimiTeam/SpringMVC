@@ -6,6 +6,8 @@ import com.gmail.timatiblackstar666.SpringMVC.models.User;
 import com.gmail.timatiblackstar666.SpringMVC.services.IUserService;
 import com.gmail.timatiblackstar666.SpringMVC.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ public class UserServiceImpl implements IUserService {
     @PostConstruct
     private void postConstructor(){
         saveUser(new User("Timati Admin", "admin@mail.com", "admin123", Constants.ROLE_ADMIN, true));
+        saveUser(new User("Timati User", "timati@mail.com", "1234", Constants.ROLE_USER, true));
     }
 
     @Override
@@ -62,5 +65,15 @@ public class UserServiceImpl implements IUserService {
         }catch (NumberFormatException e){
             throw new UserNotFoundException("Wrong id: "+id);
         }
+    }
+
+    @Override
+    public User getCurrentUser(){
+        User user = null;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            user = findUserByLogin(auth.getName());
+        }
+        return user;
     }
 }
