@@ -7,6 +7,7 @@
 </head>
 <body>
 <div align="center">
+    <a href="/home">Home</a>
     <a th:href="@{'/user?id=' + ${userId}}">Back</a>
     <h3>Creating</h3>
     <form th:action="@{'/user/new-document?userId=' + ${userId}}" method="post" th:object="${newDocument}">
@@ -35,13 +36,13 @@
             <tr>
                 <td>Start Date</td>
                 <td>
-                    <input type="date" th:text="*{startDate}"  required="true"/>
+                    <input type="date" th:field="*{startDate}"  required="true"/>
                 </td>
             </tr>
             <tr>
                 <td>End Date</td>
                 <td>
-                    <input type="date" th:value="*{endDate}" required="true"/>
+                    <input type="date" th:field="*{endDate}" required="true"/>
                 </td>
             </tr>
             <tr>

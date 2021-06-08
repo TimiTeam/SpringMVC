@@ -22,11 +22,11 @@ public class Document {
     private String number;
 
     @Column(name = "start_date")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 
     @Column(name = "end_date")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
 
     private boolean active;

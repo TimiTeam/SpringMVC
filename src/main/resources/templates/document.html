@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${userName} + ' ' + ${doc?.documentType?.name}"></title>
+</head>
+<body>
+<div align="center">
+    <a href="/home">Home</a>
+    <a th:href="@{'/user?id=' + ${userId}}">Back</a>
+    <div th:if="${errors}">
+        <p th:text="${error}"/>
+    </div>
+    <table border="1">
+        <tbody>
+        <tr>
+            <td>Document type</td>
+            <td>
+                <p th:text="${doc?.documentType?.name}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Series</td>
+            <td>
+                <p th:text="${doc?.series}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Number</td>
+            <td>
+                <p th:text="${doc?.number}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Start Date</td>
+            <td>
+                <p th:text="${doc?.startDate}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>End Date</td>
+            <td>
+                <p th:text="${doc?.endDate}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Active</td>
+            <td>
+                <p th:text="${doc?.active}"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

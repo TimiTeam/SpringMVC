@@ -29,9 +29,8 @@
         </thead>
         <tbody th:each="user : ${users}">
         <tr>
-            <a th:href="@{'/user?id=' + + ${user.id}}">
                 <td th:text="${user.id}">Id</td>
-                <td th:text="${user.name}">Name</td>
+                <td><a th:href="@{'/user?id=' + ${user.id}}"> <p th:text="${user.name}">Name </a></td>
             </a>
             <td th:text="${user.email}">Email</td>
             <td>****</td>

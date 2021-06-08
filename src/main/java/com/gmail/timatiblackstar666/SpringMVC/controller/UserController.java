@@ -12,6 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 
 @Controller
 @RequestMapping("/user")
@@ -49,13 +53,13 @@ public class UserController {
 
     @PostMapping("new-document")
     public String saveNewDocument(@RequestParam(name = "userId", required = true)String userId,
-                                 @ModelAttribute("newDocument") Document document,Model model){
+                                 @ModelAttribute("newDocument") Document document, Model model){
         User user = null;
         try {
             user = userService.findUserById(userId);
             user.addToDocuments(document);
             documentService.saveDocument(document);
-        } catch (UserNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", e.getMessage());
         }
@@ -84,13 +88,40 @@ public class UserController {
             return "redirect:/home";
         }
         try {
-            model.addAttribute("doc", documentService.findDocumentById(docId));
+            model.addAttribute("editDocument", documentService.findDocumentById(docId));
             model.addAttribute("userId", userId);
+            model.addAttribute("documentTypes", DocumentType.values());
         } catch (DocumentNotFoundException e) {
             e.printStackTrace();
             model.addAttribute("error", e.getMessage());
         }
         return "editDocument";
+    }
+
+    @GetMapping("document")
+    public String viewDocument(@RequestParam(name = "docId") String docId,
+                               @RequestParam(name = "userId", required = false) String userId,
+                               Model model){
+        if (!isRelyCurrentUser(userId)){
+            return "redirect:/home";
+        }
+        try{
+            model.addAttribute("userId", userId);
+            model.addAttribute("userName", userService.findUserById(userId));
+            model.addAttribute("doc", documentService.findDocumentById(docId));
+        }catch (Exception e){
+            e.printStackTrace();
+            model.addAttribute("error", e.getMessage());
+        }
+        return "document";
+    }
+
+    @PostMapping("edit-document")
+    public String editDocumentSave(@RequestParam(name = "userId")String userId,
+                                   @ModelAttribute("editDocument") Document document){
+        document.setOwner(userService.getCurrentUser());
+        documentService.saveDocument(document);
+        return "redirect:/user?id="+userId;
     }
 
     private boolean isRelyCurrentUser(String userId){

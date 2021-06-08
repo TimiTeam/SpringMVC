@@ -7,8 +7,62 @@
 </head>
 <body>
 <div align="center">
-  <a th:href="@{'/user?id=' + ${userId}}">Back</a>
-  <h2 th:text="'Editing ' + ${doc.series} + ' ' + ${doc.number}"/>
+    <a href="/home">Home</a>
+    <a th:href="@{'/user?id=' + ${userId}}">Back</a>
+    <h2 th:text="'Editing ' + ${editDocument?.series} + ' ' + ${editDocument.number}"/>
+    <div th:if="${errors}">
+        <p th:text="${error}"/>
+    </div>
+    <form th:action="@{'/user/edit-document?userId=' + ${userId}}" method="post" th:object="${editDocument}">
+        <table border="1">
+            <tbody>
+            <tr>
+                <td>Document type</td>
+                <td>
+                    <select th:field="*{documentType}">
+                        <option th:each="type : ${documentTypes}" th:value="${type}" th:text="${type.name}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Series</td>
+                <td>
+                    <input type="text" th:field="*{series}" minlength="4" maxlength="4"/>
+                    <input type="hidden" th:field="*{id}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Number</td>
+                <td>
+                    <input type="text" th:field="*{number}" minlength="4"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Start Date</td>
+                <td>
+                    <input type="date" th:field="*{startDate}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>End Date</td>
+                <td>
+                    <input type="date" th:field="*{endDate}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Active</td>
+                <td>
+                    <input type="checkbox" name="active" th:field="*{active}"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="submit">Save</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
 </div>
 </body>
 </html>
